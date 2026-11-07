@@ -1,0 +1,5 @@
+[
+  { "id": "eng-basic", "name": "English Speaking Basic", "level": "Pemula", "price": 299000, "duration": "6 minggu (2x sesi/minggu)", "format": "Video + live class Zoom", "description": "Percakapan sehari-hari, pronunciation, dan kepercayaan diri berbicara." },
+  { "id": "math-sma", "name": "Matematika SMA Intensif", "level": "SMA kelas 10-12", "price": 449000, "duration": "8 minggu", "format": "Video + latihan soal + grup diskusi", "description": "Persiapan ujian sekolah dan UTBK: aljabar, fungsi, trigonometri, kalkulus dasar." },
+  { "id": "web-dev", "name": "Web Development dari Nol", "level": "Pemula", "price": 599000, "duration": "10 minggu", "format": "Video + project + review mentor", "description": "HTML, CSS, JavaScript sampai membuat website portofolio sendiri." }
+]

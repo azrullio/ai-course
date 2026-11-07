@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulasi Pembayaran</title>
+<style>body{font-family:system-ui;max-width:420px;margin:40px auto;padding:16px}button{padding:12px 20px;font-size:16px}</style>
+</head><body>
+<h2>🧪 Simulasi Pembayaran (MOCK)</h2>
+<p id="info">Memuat...</p>
+<button id="pay">Bayar sekarang</button>
+<script>
+const id = new URLSearchParams(location.search).get("order");
+const info = document.getElementById("info");
+fetch("/api/order/" + id).then(r => r.json()).then(o => {
+  info.textContent = o.error || `Order ${o.orderId} — Rp${o.amount.toLocaleString("id-ID")} — status: ${o.status}`;
+});
+document.getElementById("pay").onclick = async () => {
+  const o = await (await fetch("/mock-pay/" + id, { method: "POST" })).json();
+  info.textContent = `Order ${o.orderId} — status: ${o.status} ✅ Akses course dibuka. Kembali ke chat & tanyakan status.`;
+};
+</script>
+</body></html>

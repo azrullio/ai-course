@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CS Kursus AI</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:16px;background:#f6f7fb}
+  #log{background:#fff;border-radius:12px;padding:12px;height:65vh;overflow-y:auto}
+  .m{margin:8px 0;padding:8px 12px;border-radius:10px;white-space:pre-wrap;max-width:85%}
+  .user{background:#4f46e5;color:#fff;margin-left:auto}.bot{background:#eef}
+  form{display:flex;gap:8px;margin-top:8px}input{flex:1;padding:10px;border-radius:8px;border:1px solid #ccc}
+  button{padding:10px 16px;border:0;border-radius:8px;background:#4f46e5;color:#fff}
+</style>
+</head>
+<body>
+<h2>💬 Tanya-tanya Kursus</h2>
+<div id="log"><div class="m bot">Halo! Mau tanya soal course, biaya, atau lama belajar? 😊</div></div>
+<form id="f"><input id="q" placeholder="Ketik pertanyaan..." autocomplete="off"><button>Kirim</button></form>
+<script>
+let messages = [];
+const log = document.getElementById("log");
+function add(text, cls){
+  const d = document.createElement("div"); d.className = "m " + cls;
+  d.innerHTML = text.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))
+    .replace(/(https?:\/\/[^\s)]+)/g, '<a href="$1" target="_blank">$1</a>');
+  log.appendChild(d); log.scrollTop = log.scrollHeight;
+}
+document.getElementById("f").onsubmit = async e => {
+  e.preventDefault();
+  const q = document.getElementById("q"); const text = q.value.trim(); if(!text) return;
+  q.value = ""; add(text, "user");
+  messages.push({ role: "user", content: text });
+  const r = await fetch("/api/chat", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ messages }) });
+  const data = await r.json();
+  if (data.error) return add("Error: " + data.error, "bot");
+  messages = data.messages; add(data.reply, "bot");
+};
+</script>
+</body>
+</html>
